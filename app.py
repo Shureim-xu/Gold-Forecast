@@ -119,40 +119,42 @@ def load_logs(path=LOG_FILE):
     except Exception:
         return None
 
-@st.cache_resource
-def load_ml_resources():
-    """
-    Find and load model and scalers. Using direct path assignment.
-    """
+# Function to perform the actual loading (outside of the Streamlit cache wrapper)
+def _attempt_load_ml_files():
+    """Defines paths and attempts to load ML resources."""
     import os
-    
-    # CRITICAL FIX: Define paths directly
+    import joblib
+    from tensorflow.keras.models import load_model 
+
     model_path = "xau_seq2seq_7d.h5"
     scaler_x_path = "scaler_X.pkl"
     scaler_y_path = "scaler_y.pkl"
 
+    # CRITICAL: Check for existence first
     if not (os.path.exists(model_path) and 
             os.path.exists(scaler_x_path) and 
             os.path.exists(scaler_y_path)):
         
-        # Log if files are not found on disk
         print("LOG: ML resource files not found on disk. Checked: xau_seq2seq_7d.h5, scaler_X.pkl, scaler_y.pkl")
         return None, None, None, False
 
     try:
-        from tensorflow.keras.models import load_model 
-        import joblib
-        
-        # Attempt to load the models
+        # Load resources
         model = load_model(model_path, compile=False)
         scaler_X = joblib.load(scaler_x_path)
         scaler_y = joblib.load(scaler_y_path)
         
         return model, scaler_X, scaler_y, True
     except Exception as e:
-        # CRITICAL LOG: Logs the actual loading failure reason 
+        # CRITICAL LOG: Logs the actual loading failure reason
         print(f"CRITICAL LOG: Failed to load ML resources. Exception: {e}")
         return None, None, None, False
+
+@st.cache_resource
+def load_ml_resources():
+    """Cached wrapper that calls the clean loading function."""
+    # This entire function is now just one line, making indentation impossible to get wrong.
+    return _attempt_load_ml_files()
 
 # Load all resources globally
 market_df = load_market()
