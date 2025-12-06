@@ -122,24 +122,33 @@ def load_logs(path=LOG_FILE):
 @st.cache_resource
 def load_ml_resources():
     """
-    Find and load model and scalers.
-    
-    NOTE: The path assignments MUST be correctly indented inside this function.
+    Find and load model and scalers without relying on _find_file helper.
     """
-    # CRITICAL: These three lines must be correctly indented to define the variables!
-    model_path = _find_file(MODEL_CANDIDATES)
-    scaler_x_path = _find_file(SCALER_X_CANDIDATES)
-    scaler_y_path = _find_file(SCALER_y_CANDIDATES)
+    import os
+    
+    # 🐛 FIX: Define paths directly using the file names
+    model_path = "xau_seq2seq_7d.h5"
+    scaler_x_path = "scaler_X.pkl"
+    scaler_y_path = "scaler_y.pkl"
 
-    if not all([model_path, scaler_x_path, scaler_y_path]):
-        # Log to deployment console if files are not found on disk
-        print("LOG: ML resource files not found on disk.")
+    # CRITICAL: Check for existence using os.path.exists
+    if not (os.path.exists(model_path) and 
+            os.path.exists(scaler_x_path) and 
+            os.path.exists(scaler_y_path)):
+        
+        # Log if files are not found on disk
+        print("LOG: ML resource files not found on disk. Checked: xau_seq2seq_7d.h5, scaler_X.pkl, scaler_y.pkl")
         return None, None, None, False
 
     try:
+        from tensorflow.keras.models import load_model 
+        import joblib
+        
+        # Attempt to load the models
         model = load_model(model_path, compile=False)
         scaler_X = joblib.load(scaler_x_path)
         scaler_y = joblib.load(scaler_y_path)
+        
         return model, scaler_X, scaler_y, True
     except Exception as e:
         # CRITICAL LOG: Logs the actual loading failure reason 
