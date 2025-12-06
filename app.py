@@ -34,7 +34,7 @@ FEATURES = ['Open','High','Low','Close','Volume','Return','MA_7','MA_21','Vol_7'
 # File paths/candidates
 MODEL_CANDIDATES = ["xau_seq2seq_7d.h5", "xau_seq2seq_7d.h5"]
 SCALER_X_CANDIDATES = ["scaler_X.pkl", "scaler_X.pkl"]
-SCALER_y_CANDIDATES = ["scaler_y.pkl", "scaler_y.pickle"]
+SCALER_y_CANDIDATES = ["scaler_y.pkl", "scaler_y.pkl"]
 
 st.set_page_config(page_title="Gold Forecast • Premium Dashboard", layout="wide", page_icon="🟡")
 
