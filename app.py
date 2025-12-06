@@ -9,6 +9,10 @@ import time
 from datetime import timedelta, datetime 
 from tensorflow.keras.models import load_model
 
+import os
+st.write(os.listdir("."))
+
+
 # CONFIGURATION
 LOG_FILE = "logs.csv"            # Prediction log file
 MARKET_FILE = "XAU_1d_data.csv"  # Historical OHLC CSV
