@@ -126,7 +126,7 @@ def load_ml_resources():
     
     NOTE: The path assignments MUST be correctly indented inside this function.
     """
-    # 🐛 FIX: Ensure these lines are present and correctly indented to define the variables
+    # CRITICAL: These three lines must be correctly indented to define the variables!
     model_path = _find_file(MODEL_CANDIDATES)
     scaler_x_path = _find_file(SCALER_X_CANDIDATES)
     scaler_y_path = _find_file(SCALER_y_CANDIDATES)
@@ -142,10 +142,9 @@ def load_ml_resources():
         scaler_y = joblib.load(scaler_y_path)
         return model, scaler_X, scaler_y, True
     except Exception as e:
-        # 💡 CRITICAL ADDITION: Log the actual loading failure reason (e.g., Keras/TF error)
+        # CRITICAL LOG: Logs the actual loading failure reason 
         print(f"CRITICAL LOG: Failed to load ML resources. Exception: {e}")
         return None, None, None, False
-
 
 # Load all resources globally
 market_df = load_market()
