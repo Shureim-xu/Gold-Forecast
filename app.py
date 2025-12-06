@@ -12,8 +12,6 @@ from tensorflow.keras.models import load_model
 import keras
 
 
-
-
 try:
     model = keras.models.load_model("xau_seq2seq_7d.h5", compile=False)
     model_loaded = True
@@ -34,8 +32,8 @@ MAX_MARKET_ROWS = 1500           # Limit total rows read for large historical fi
 FEATURES = ['Open','High','Low','Close','Volume','Return','MA_7','MA_21','Vol_7']
 
 # File paths/candidates
-MODEL_CANDIDATES = ["xau_seq2seq_7d.h5", "xau_lstm_model_7d.h5"]
-SCALER_X_CANDIDATES = ["scaler_X.pkl", "scaler.pkl"]
+MODEL_CANDIDATES = ["xau_seq2seq_7d.h5", "xau_seq2seq_7d.h5"]
+SCALER_X_CANDIDATES = ["scaler_X.pkl", "scaler_X.pkl"]
 SCALER_y_CANDIDATES = ["scaler_y.pkl", "scaler_y.pickle"]
 
 st.set_page_config(page_title="Gold Forecast • Premium Dashboard", layout="wide", page_icon="🟡")
