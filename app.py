@@ -10,7 +10,7 @@ from datetime import timedelta, datetime
 from tensorflow.keras.models import load_model
 
 import keras
-model = keras.models.load_model("xau_seq2seq_7d.h5", compile=False)
+
 
 
 
