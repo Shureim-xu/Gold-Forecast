@@ -10,18 +10,20 @@ from datetime import timedelta, datetime
 from tensorflow.keras.models import load_model
 
 import os
-from tensorflow.keras.models import load_model
+import keras
+model = keras.models.load_model("xau_seq2seq_7d.h5", compile=False)
+
 
 st.write("📁 Files in working directory:")
 st.write(os.listdir("."))
 
 try:
-    st.write("Attempting model load...")
-    model = load_model("xau_seq2seq_7d.h5")
-    st.success("MODEL LOADED SUCCESSFULLY!")
+    model = keras.models.load_model("xau_seq2seq_7d.h5", compile=False)
+    model_loaded = True
 except Exception as e:
-    st.error(f"MODEL LOAD ERROR: {e}")
-
+    st.error(f"❌ Model load failure: {e}")
+    model = None
+    model_loaded = False
 
 
 # CONFIGURATION
