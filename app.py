@@ -137,7 +137,9 @@ def load_ml_resources():
         scaler_X = joblib.load(scaler_x_path)
         scaler_y = joblib.load(scaler_y_path)
         return model, scaler_X, scaler_y, True
-    except Exception: # You can change this back if you fixed your printing, but for now, keep it simple
+    except Exception as e:
+        # Re-adding error logging temporarily to catch the next error
+        print(f"ERROR: Failed to load ML resources. Reason: {e}")
         return None, None, None, False
 
 # Load all resources globally
