@@ -122,16 +122,15 @@ def load_logs(path=LOG_FILE):
 @st.cache_resource
 def load_ml_resources():
     """
-    Find and load model and scalers without relying on _find_file helper.
+    Find and load model and scalers. Using direct path assignment.
     """
     import os
     
-    # 🐛 FIX: Define paths directly using the file names
+    # CRITICAL FIX: Define paths directly
     model_path = "xau_seq2seq_7d.h5"
     scaler_x_path = "scaler_X.pkl"
     scaler_y_path = "scaler_y.pkl"
 
-    # CRITICAL: Check for existence using os.path.exists
     if not (os.path.exists(model_path) and 
             os.path.exists(scaler_x_path) and 
             os.path.exists(scaler_y_path)):
