@@ -3,5 +3,5 @@ pandas
 numpy
 plotly
 joblib
-tensorflow==2.13.0
-keras==2.13.1
+tensorflow
+keras
