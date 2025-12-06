@@ -9,13 +9,10 @@ import time
 from datetime import timedelta, datetime 
 from tensorflow.keras.models import load_model
 
-import os
 import keras
 model = keras.models.load_model("xau_seq2seq_7d.h5", compile=False)
 
 
-st.write("📁 Files in working directory:")
-st.write(os.listdir("."))
 
 try:
     model = keras.models.load_model("xau_seq2seq_7d.h5", compile=False)
