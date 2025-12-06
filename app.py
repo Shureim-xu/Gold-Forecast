@@ -123,7 +123,11 @@ def load_logs(path=LOG_FILE):
 @st.cache_resource
 def load_ml_resources():
     """Find and load model and scalers."""
-    # ... file finding logic ...
+    
+    # 1. CRITICAL: These lines must be present to define the paths
+    model_path = _find_file(MODEL_CANDIDATES)
+    scaler_x_path = _find_file(SCALER_X_CANDIDATES)
+    scaler_y_path = _find_file(SCALER_y_CANDIDATES)
 
     if not all([model_path, scaler_x_path, scaler_y_path]):
         return None, None, None, False
@@ -133,11 +137,8 @@ def load_ml_resources():
         scaler_X = joblib.load(scaler_x_path)
         scaler_y = joblib.load(scaler_y_path)
         return model, scaler_X, scaler_y, True
-    except Exception as e: # <-- CHANGE THIS LINE
-        # Log the actual error to Streamlit's console
-        print(f"ERROR: Failed to load ML resources. Reason: {e}")
+    except Exception: # You can change this back if you fixed your printing, but for now, keep it simple
         return None, None, None, False
-
 
 # Load all resources globally
 market_df = load_market()
